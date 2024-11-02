@@ -1,0 +1,4 @@
+DB_HOST="mysql"
+DB_NAME="table name"
+DB_USER="user for database"
+DB_PASSWORD="database password"
