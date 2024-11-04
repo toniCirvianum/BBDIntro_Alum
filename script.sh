@@ -17,6 +17,18 @@ php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 php -r "unlink('composer-setup.php');"
 
+# instal.lar Xdebug
+pecl install xdebug
+docker-php-ext-enable xdebug
+
+# Configuració de Xdebug
+echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" >> /usr/local/etc/php/conf.d/xdebug.ini
+echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/xdebug.ini
+echo "xdebug.start_with_request=yes" >> /usr/local/etc/php/conf.d/xdebug.ini
+echo "xdebug.client_host=host.docker.internal" >> /usr/local/etc/php/conf.d/xdebug.ini
+echo "xdebug.client_port=9003" >> /usr/local/etc/php/conf.d/xdebug.ini
+echo "xdebug.log=/tmp/xdebug.log" >> /usr/local/etc/php/conf.d/xdebug.ini
+
 # Afegir Composer a la variable PATH
 echo 'export PATH="$PATH:/usr/local/bin"' >> ~/.bashrc
 
