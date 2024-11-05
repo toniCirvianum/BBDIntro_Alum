@@ -3,15 +3,33 @@
 require_once(__DIR__ . '/vendor/autoload.php');
 
 //carreguem les variables d'entorn
-// $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-// $dotenv->load();
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 
 
 function getConnection()
 //realitza la connexió amb al BBDD
 {
+    $db_host=$_ENV['DB_HOST'];
+    $db_name = $_ENV['DB_NAME'];
+    $db_user = $_ENV['DB_USER'];
+    $db_password = $_ENV['DB_PASSWORD'];
 
+    $options = [
+        PDO::ATTR_ERRMODE=> PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE=> PDO::FETCH_ASSOC
+    ];
+
+    try {
+        $connection = new PDO("mysql:host".$db_host.";dbname=".$db_name,$db_user,$db_password,$options);
+        $connection-> EXEC("SET CHARACTER SET UTF8");
+        echo "Conexion ok a la base de dades";
+        return $connection;
+
+    } catch (PDOException $e) {
+        echo "Error de connexio a la base de dade->".$e->getMessage();
+    }
 }
 
 function closeConnection($connection)

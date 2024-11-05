@@ -7,7 +7,7 @@ services:
   expose:
     - 80
   ports:
-    - 8085:80 #Port de la web en aquest cas el 80
+    - 80:80 #Port de la web en aquest cas el 80
   command:
       - bash
       - -c
