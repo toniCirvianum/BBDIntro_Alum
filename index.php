@@ -77,6 +77,25 @@ if (isset($_GET['id'])) {
 
    
 }
+if (isset($_GET['id_delete'])) {
+    $id = htmlspecialchars(($_GET['id_delete']));
+    $sql ="DELETE FROM user1 WHERE id=:id";
+    $params = [
+        ':id'=>$id
+    ];
+    $result = queryDataBase($sql,$params);
+
+    if ($result!=null) {
+        echo "<h1>Usuari amb id ".$id. "elimiinat</h1>";
+    } else {
+        echo "<h1>Error al eliminar</h1>";
+    }
+
+
+
+
+   
+}
 
 //insert users
 // INSERT INTO user1 (id, name, username, password, admin) VALUES
@@ -105,6 +124,11 @@ getConnection();
     <form action="#" method="get">
         <label for="id">Uusari a consultar:</label>
         <input type="text" name="id">
+        <input type="submit" value="Consultar">
+    </form>
+    <form action="#" method="get">
+        <label for="id">Uusari a eliminar:</label>
+        <input type="text" name="id_delete">
         <input type="submit" value="Consultar">
     </form>
     <h1>
