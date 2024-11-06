@@ -65,6 +65,16 @@ function queryDataBase($sql, $params = null, $id = false)
 
 if (isset($_GET['id'])) {
     $id = htmlspecialchars(($_GET['id']));
+    $sql ="SELECT * FROM user1 WHERE id=:id";
+    $params = [
+        ':id'=>$id
+    ];
+    $result = queryDataBase($sql,$params)->fetchAll();
+
+    echo "<pre>";
+        print_r($result);
+        echo "</pre>";
+
    
 }
 
@@ -99,6 +109,7 @@ getConnection();
     </form>
     <h1>
     <a href="users.php">Llista d'usuaris</a>
+    <a href="insert.php">Inertar usuaris</a>
     </h1>
 
 </body>
