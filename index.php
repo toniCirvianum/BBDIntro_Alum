@@ -22,7 +22,7 @@ function getConnection()
     ];
 
     try {
-        $connection = new PDO("mysql:host".$db_host.";dbname=".$db_name,$db_user,$db_password,$options);
+        $connection = new PDO("mysql:host=".$db_host.";dbname=".$db_name,$db_user,$db_password,$options);
         $connection-> EXEC("SET CHARACTER SET UTF8");
         echo "Conexion ok a la base de dades";
         return $connection;
@@ -35,13 +35,32 @@ function getConnection()
 function closeConnection($connection)
 //funcio per tancar la connexio
 {
-
+    $connection = null;
 }
 
 function queryDataBase($sql, $params = null, $id = false)
 //executa la sentencia sql que li passem per parametre
 {
+    try {
+        $connection = getConnection();
+        $statement = getConnection()->prepare($sql);
 
+        if ($params!=null) {
+            $result =$statement->execute($params);
+        } else {
+            $result= $statement->execute();
+        }
+        if ($id) {
+            $result = $connection->lastInsertId();
+        } else {
+            $result = $statement->rowCount()>0 ? $statement : null;
+        }
+        closeConnection($connection);
+        return $result;
+    } catch (PDOException $err) {
+        
+        echo "error: ". $err->getMessage();
+    }
 }
 
 if (isset($_GET['id'])) {
@@ -57,7 +76,7 @@ if (isset($_GET['id'])) {
 // (4, 'Julia Xirinachs', 'julia', '123', 1),
 // (5, 'Ramon Farre', 'ramon', 'xyz', 1);
 
-
+getConnection();
 
 
 ?>

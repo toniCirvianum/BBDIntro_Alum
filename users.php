@@ -2,7 +2,13 @@
 
 require_once(__DIR__ . '/index.php');
 
-function getUsers() {}
+function getUsers() {
+    $sql = "SELECT * FROM user1";
+    $users = queryDataBase($sql)->fetchAll();
+    return $users;
+
+
+}
 
 ?>
 
@@ -18,6 +24,12 @@ function getUsers() {}
 <body>
     <a href="index.php">Index</a>
     <h1> Llista usuaris</h1>
+    <?php
+        echo "<pre>";
+        print_r(getUsers());
+        echo "</pre>";
+
+        ?>
 
 
 
