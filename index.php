@@ -85,11 +85,7 @@ if (isset($_GET['id_delete'])) {
     ];
     $result = queryDataBase($sql,$params);
 
-    if ($result!=null) {
-        echo "<h1>Usuari amb id ".$id. "elimiinat</h1>";
-    } else {
-        echo "<h1>Error al eliminar</h1>";
-    }
+
 
 
 
